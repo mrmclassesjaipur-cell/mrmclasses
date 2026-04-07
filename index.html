@@ -4,215 +4,78 @@
 <title>Mrm Classes Jaipur</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+<link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet">
+
 <style>
 body{
 margin:0;
-font-family:'Poppins',sans-serif;
-background:linear-gradient(135deg,#0f2027,#203a43,#2c5364);
+font-family:Poppins;
+background:linear-gradient(270deg,#0f2027,#203a43,#2c5364);
+background-size:600% 600%;
+animation:bg 10s infinite;
 color:white;
 }
 
-/* NAV */
+@keyframes bg{
+0%{background-position:0%}
+50%{background-position:100%}
+100%{background-position:0%}
+}
+
 .nav{
 display:flex;
 justify-content:space-between;
 padding:15px;
 background:rgba(0,0,0,0.6);
-backdrop-filter:blur(10px);
 }
 
-/* BUTTON */
-button{
-padding:10px 20px;
-border:none;
-border-radius:20px;
-background:linear-gradient(45deg,#ff416c,#ff4b2b);
-color:white;
-cursor:pointer;
-transition:0.3s;
-}
-button:hover{
-transform:scale(1.1);
-}
-
-/* HERO */
 .hero{
-height:80vh;
+height:100vh;
 display:flex;
 justify-content:center;
 align-items:center;
+flex-direction:column;
 text-align:center;
 }
 
-/* COURSES */
-.courses{
-padding:30px;
-text-align:center;
-}
-
-.card{
-display:inline-block;
-width:200px;
-margin:15px;
-padding:20px;
-border-radius:15px;
-background:rgba(255,255,255,0.1);
+.btn{
+padding:12px 25px;
+background:#ff416c;
+border:none;
+border-radius:20px;
+color:white;
 cursor:pointer;
-transition:0.3s;
-}
-.card:hover{
-transform:translateY(-10px);
 }
 
-/* LOGIN BOX */
-.box{
-background:white;
-color:black;
-padding:20px;
-width:250px;
-margin:20px auto;
-border-radius:10px;
-}
-
-/* DASHBOARD */
-.dashboard{
-display:none;
-padding:20px;
+.section{
+padding:40px;
+text-align:center;
 }
 </style>
 </head>
 
 <body>
 
-<!-- NAV -->
 <div class="nav">
 <h2>Mrm Classes</h2>
-<div>
-<button onclick="showLogin()">Login</button>
-<button onclick="showRegister()">Register</button>
-<button onclick="logout()">Logout</button>
-</div>
+<a href="login.html"><button class="btn">Login</button></a>
 </div>
 
-<!-- HERO -->
 <div class="hero">
-<div>
-<h1>Mrm Classes Jaipur 🚀</h1>
-<p>Prepare for REET, SSC, IAS, Patwari & more</p>
-<button onclick="joinNow()">Enroll via WhatsApp 📲</button>
-</div>
+<h1 data-aos="fade-up">Mrm Classes Jaipur 🚀</h1>
+<p data-aos="fade-up">50,000+ Students | 25+ Expert Teachers</p>
+<button class="btn" onclick="location.href='about.html'">Explore More</button>
 </div>
 
-<!-- COURSES -->
-<div class="courses">
-<h2>Courses</h2>
-
-<div class="card" onclick="enrollCourse('REET')">REET - ₹2000</div>
-<div class="card" onclick="enrollCourse('SSC')">SSC - ₹2500</div>
-<div class="card" onclick="enrollCourse('IAS')">IAS - ₹3000</div>
-<div class="card" onclick="enrollCourse('Patwari')">Patwari - ₹2200</div>
-<div class="card" onclick="enrollCourse('RPSC')">RPSC - ₹2600</div>
-<div class="card" onclick="enrollCourse('Railway')">Railway - ₹2400</div>
-<div class="card" onclick="enrollCourse('Banking')">Banking - ₹2300</div>
-<div class="card" onclick="enrollCourse('Defence')">Defence - ₹2100</div>
-
+<div class="section">
+<h2 data-aos="fade-up">Why Choose Us?</h2>
+<p data-aos="fade-up">
+Affordable courses, expert teachers, structured preparation & real results.
+</p>
 </div>
 
-<!-- LOGIN -->
-<div id="loginBox" style="display:none;">
-<div class="box">
-<h3>Login</h3>
-<input id="loginUser" placeholder="Email"><br><br>
-<input id="loginPass" type="password" placeholder="Password"><br><br>
-<button onclick="login()">Login</button>
-</div>
-</div>
-
-<!-- REGISTER -->
-<div id="registerBox" style="display:none;">
-<div class="box">
-<h3>Register</h3>
-<input id="regUser" placeholder="Email"><br><br>
-<input id="regPass" type="password" placeholder="Password"><br><br>
-<button onclick="register()">Register</button>
-</div>
-</div>
-
-<!-- DASHBOARD -->
-<div id="dashboard" class="dashboard"></div>
-
-<script>
-
-// WhatsApp
-function joinNow(){
-window.open("https://wa.me/916350573302");
-}
-
-// UI
-function showLogin(){ loginBox.style.display="block"; }
-function showRegister(){ registerBox.style.display="block"; }
-
-// REGISTER
-function register(){
-let email=regUser.value;
-let pass=regPass.value;
-
-localStorage.setItem(email, JSON.stringify({
-password: pass,
-courses: []
-}));
-
-alert("Registered ✅");
-}
-
-// LOGIN
-function login(){
-let email=loginUser.value;
-let pass=loginPass.value;
-
-let user=JSON.parse(localStorage.getItem(email));
-
-if(user && user.password===pass){
-alert("Login Success 🎉");
-loadDashboard(email);
-}else{
-alert("Wrong ❌");
-}
-}
-
-// LOGOUT
-function logout(){
-location.reload();
-}
-
-// DASHBOARD
-function loadDashboard(email){
-let user=JSON.parse(localStorage.getItem(email));
-
-dashboard.style.display="block";
-
-dashboard.innerHTML=`
-<h2>🎓 Student Dashboard</h2>
-<p>Email: ${email}</p>
-<p>Courses: ${user.courses.join(", ") || "None"}</p>
-`;
-}
-
-// ENROLL
-function enrollCourse(course){
-let email=loginUser.value;
-let user=JSON.parse(localStorage.getItem(email));
-
-if(user){
-user.courses.push(course);
-localStorage.setItem(email, JSON.stringify(user));
-alert(course+" Enrolled ✅");
-}else{
-alert("Login first ❌");
-}
-}
-
-</script>
+<script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+<script>AOS.init();</script>
 
 </body>
 </html>
